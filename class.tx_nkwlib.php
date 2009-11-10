@@ -7,10 +7,6 @@ class tx_nkwlib extends tslib_pibase {
 	var $extKey;
 	var $conf;
 
-	#$this->conf=$conf;
-
-	#debug($conf);
-
 	function getPageUrl($clean = FALSE)
 	{
 		$url = $GLOBALS['TSFE']->baseUrl.$GLOBALS['TSFE']->anchorPrefix;
@@ -22,21 +18,73 @@ class tx_nkwlib extends tslib_pibase {
 		return $url;
 	}
 
+
+	function getLanguage()
+	{
+		$lang = $GLOBALS["TSFE"]->sys_page->sys_language_uid;
+		return $lang;
+	}
+
+	function getPageUID()
+	{
+		$pageUID = $GLOBALS['TSFE']->id;
+		return $pageUID;
+	}
+
+	function keywordsForPage($id, $lang, $mode = FALSE)
+	{
+
+		if ($lang == 0)
+			$sep = "_de";
+		else if ($lang == 1)
+			$sep = "_en";
+
+		$pageInfo = $this->pageInfo($id, $lang);
+
+		if (!empty($pageInfo["tx_nkwkeywords_keywords"]))
+		{
+			if ($mode == "header")
+			{
+				$tmp = explode(",", $pageInfo["tx_nkwkeywords_keywords"]);
+				foreach($tmp AS $key => $value)
+				{
+					$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery("*","tx_nkwkeywords_keywords","uid = '".$value."'","","","");
+					while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1))
+						$tmpList .= $row1["title".$sep].",";
+				}
+				$str .= substr($tmpList, 0, -1);
+			}
+			else if ($mode == "infobox")
+			{
+				$tmp = explode(",", $pageInfo["tx_nkwkeywords_keywords"]);
+				foreach($tmp AS $key => $value)
+				{
+					$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery("*","tx_nkwkeywords_keywords","uid = '".$value."'","","","");
+					while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1))
+					{
+						$str .= "<li>".$this->pi_LinkToPage($row1["title".$sep],$GLOBALS['TSFE']->tmpl->flatSetup["keywordslandingpage"],"",array("tx_nkwkeywords[id]" => $value))."</li>";
+					}
+				}
+			}
+		}
+
+		return $str;
+
+	}
+
+
 	function pageInfo($id, $lang = FALSE)
 	{
-		#debug("pageInfo: id: ".$id." lang: ".$lang);
+
 		if ($lang > 0)
 		{
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				"*","pages_language_overlay","pid = '".$id."'","","",""
 			);
-			#debug("asdf");
 		}
 		else
-		{
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery("*","pages","uid = '".$id."'","","","");
-			#debug("flasch");
-		}
+
 		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1))
 		{
 			$pageInfo["uid"] = $row1["uid"];
@@ -44,9 +92,18 @@ class tx_nkwlib extends tslib_pibase {
 			$pageInfo["title"] = $row1["title"];
 			$pageInfo["keywords"] = $row1["keywords"];
 			$pageInfo["tx_nkwsubmenu_knot"] = $row1["tx_nkwsubmenu_knot"];
-			#debug($row1["title"]);
+			$pageInfo["tx_nkwkeywords_keywords"] = $row1["tx_nkwkeywords_keywords"];
 		}
+
+		if ($lang > 0)
+		{
+			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery("tx_nkwkeywords_keywords","pages","uid = '".$pageInfo["pid"]."'","","","");
+			while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1))
+				$pageInfo["tx_nkwkeywords_keywords"] = $row1["tx_nkwkeywords_keywords"];
+		}
+
 		return $pageInfo;
+
 	}
 
 
