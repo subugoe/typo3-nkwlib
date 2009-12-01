@@ -13,6 +13,7 @@
 			<label index="flexform.description">Description</label>
 			<label index="flexform.yesno">Yes/No</label>
 			<label index="flexform.target">Target (Single View)</label>
+			<label index="flexform.source">Source</label>
 			<label index="flexform.showBackPID">Show Back PID Link</label>
 			<label index="flexform.text">Text</label>
 			<label index="flexform.display">Display</label>
@@ -39,6 +40,7 @@
 			<label index="flexform.description">Beschreibung</label>
 			<label index="flexform.yesno">Ja/Nein</label>
 			<label index="flexform.target">Ziel (Einzelansicht)</label>
+			<label index="flexform.source">Source</label>
 			<label index="flexform.showBackPID">Zeige Back PID Link</label>
 			<label index="flexform.text">Text</label>
 			<label index="flexform.display">Anzeigeart</label>

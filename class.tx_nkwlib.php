@@ -251,8 +251,8 @@ function isChild()
 	function hReturnFormatDate($time, $lang = FALSE)
 	{
 		$date = date("d",$time).".".date("m",$time).".".date("Y",$time);
-		if ($lang = "en")
-			$date = date("Y",$time)."-".date("m",$time)."-".date("Y",$time);	
+		if ($lang != 0)
+			$date = date("Y",$time)."-".date("m",$time)."-".date("d",$time);	
 		return $date;
 	}
 
