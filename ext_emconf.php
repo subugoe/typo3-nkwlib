@@ -11,7 +11,7 @@
 ########################################################################
 
 $EM_CONF[$_EXTKEY] = array(
-	'title' => 'nkw Library',
+	'title' => 'NKW Library',
 	'description' => '',
 	'category' => 'misc',
 	'author' => 'Nils K. Windisch',
@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => 'Goettingen State and University Library, Germany http://sub.uni-goettingen,de',
-	'version' => '0.0.12',
+	'version' => '0.0.13',
 	'constraints' => array(
 		'depends' => array(
 		),
