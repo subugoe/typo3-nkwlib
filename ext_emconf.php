@@ -29,7 +29,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'clearCacheOnLoad' => 0,
 	'lockType' => '',
 	'author_company' => 'Goettingen State and University Library, Germany http://sub.uni-goettingen,de',
-	'version' => '0.0.13',
+	'version' => '0.0.14',
 	'constraints' => array(
 		'depends' => array(
 		),

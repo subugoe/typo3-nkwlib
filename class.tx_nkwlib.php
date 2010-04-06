@@ -7,6 +7,16 @@ class tx_nkwlib extends tslib_pibase {
 	var $extKey;
 	var $conf;
 
+	function geocodeAddress($str)
+	{
+		$str = ereg_replace(" ", "+", $str);
+		$getThis = "http://maps.google.com/maps/api/geocode/json?address=".$str."&sensor=false";
+		$json = file_get_contents($getThis);
+		$tmp = json_decode($json, true);
+		$return = $tmp;
+		return $return;
+	}
+
 	function getPageUrl($clean = FALSE)
 	{
 		$url = $GLOBALS['TSFE']->baseUrl.$GLOBALS['TSFE']->anchorPrefix;
