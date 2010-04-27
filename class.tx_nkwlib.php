@@ -7,6 +7,12 @@ class tx_nkwlib extends tslib_pibase {
 	var $extKey;
 	var $conf;
 
+	function getFirstLetter($str)
+	{
+		$str = strtoupper(mb_substr($str,0,1,'UTF-8'));
+		return $str;
+	}
+
 	function geocodeAddress($str)
 	{
 		$str = ereg_replace(" ", "+", $str);
