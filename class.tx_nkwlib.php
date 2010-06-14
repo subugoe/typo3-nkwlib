@@ -34,7 +34,6 @@ class tx_nkwlib extends tslib_pibase {
 		return $url;
 	}
 
-
 	function getLanguage()
 	{
 		$lang = $GLOBALS["TSFE"]->sys_page->sys_language_uid;
@@ -88,7 +87,6 @@ class tx_nkwlib extends tslib_pibase {
 
 	}
 
-
 	function pageInfo($id, $lang = FALSE)
 	{
 
@@ -121,7 +119,6 @@ class tx_nkwlib extends tslib_pibase {
 		return $pageInfo;
 
 	}
-
 
 	function knotID($id) // or better isPartOfKnot
 	{
@@ -178,7 +175,6 @@ class tx_nkwlib extends tslib_pibase {
 		return $list;
 	}
 	
-
 	// return PID
 	// check if a page uses the content of another page "content_from_pid"
 	function checkForAlienContent($id)
@@ -222,7 +218,6 @@ class tx_nkwlib extends tslib_pibase {
 	
 	}
 
-
 	function pageKeywordsList($id, $lang = FALSE)
 	{
 		#debug("pageKeywordsList: id: ".$id." lang: ".$lang);
@@ -233,7 +228,6 @@ class tx_nkwlib extends tslib_pibase {
 		else
 			return FALSE;
 	}
-
 
 	/*
 function isChild()
@@ -254,14 +248,12 @@ function isChild()
 		return $str;
 	}
 
-
 	# retruns todays unix time stamp (day start)
 	function hTime()
 	{
 		$time = mktime(0,0,0,date("m"),date("d"),date("Y"));
 		return $time;
 	}
-
 
 	# returns a humanreadable date format
 	function hReturnFormatDate($time, $lang = FALSE)
@@ -271,7 +263,6 @@ function isChild()
 			$date = date("Y",$time)."-".date("m",$time)."-".date("d",$time);	
 		return $date;
 	}
-
 	
 	function hReturnFormatDateSortable($time)
 	{
@@ -279,7 +270,6 @@ function isChild()
 		return $date;
 	}	
 
-	
 	# debug output
 	function dPrint($str)
 	{
