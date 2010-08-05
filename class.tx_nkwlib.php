@@ -22,7 +22,7 @@
 *  This copyright notice MUST APPEAR in all copies of the script!
 ***************************************************************/
 
-require_once(PATH_tslib."class.tslib_pibase.php");
+require_once(PATH_tslib . 'class.tslib_pibase.php');
 
 class tx_nkwlib extends tslib_pibase {
 
@@ -96,7 +96,12 @@ class tx_nkwlib extends tslib_pibase {
 				$tmp = explode(',', $pageInfo['tx_nkwkeywords_keywords']);
 				foreach($tmp AS $key => $value) {
 					$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-							'*', 'tx_nkwkeywords_keywords', "uid = '" . $value . "'", '', '', '');
+							'*', 
+							'tx_nkwkeywords_keywords', 
+							"uid = '" . $value . "'", 
+							'', 
+							'', 
+							'');
 					while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 						$str .= '<li>' . $this->pi_LinkToPage(
 								$row1['title' . $sep], 
@@ -112,13 +117,52 @@ class tx_nkwlib extends tslib_pibase {
 
 	}
 
+	function getPageTitle($id, $lang = 0) {
+		if ($lang > 0) {
+			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'title', 
+				'pages_language_overlay', 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'', 
+				'', 
+				'');
+			while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
+				$title = $row1['title'];
+			}
+		}
+		if ($lang == 0 || ($lang > 0 && !$title)) {
+			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'*', 
+				'pages', 
+				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'', 
+				'', 
+				'');
+			while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
+				$title = $row1['title'];
+			}
+		}
+		return $title;
+	}
+
 	function pageInfo($id, $lang = FALSE) {
 
 		if ($lang > 0) {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-				'*', 'pages_language_overlay', "pid = '" . $id . "'", '', '', '');
+				'*', 
+				'pages_language_overlay', 
+				"pid = '" . $id . "'", 
+				'', 
+				'', 
+				'');
 		} else {
-			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery('*', 'pages', "uid = '" . $id . "'", '', '', '');
+			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'*', 
+				'pages', 
+				"uid = '" . $id . "'", 
+				'', 
+				'', 
+				'');
 		}
 
 		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
@@ -132,7 +176,12 @@ class tx_nkwlib extends tslib_pibase {
 
 		if ($lang > 0) {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-					'tx_nkwkeywords_keywords', 'pages', "uid = '" . $pageInfo["pid"] . "'", '', '', '');
+					'tx_nkwkeywords_keywords', 
+					'pages', 
+					"uid = '" . $pageInfo["pid"] . "'", 
+					'', 
+					'', 
+					'');
 			while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 				$pageInfo['tx_nkwkeywords_keywords'] = $row1['tx_nkwkeywords_keywords'];
 			}
@@ -144,7 +193,12 @@ class tx_nkwlib extends tslib_pibase {
 
 	function knotID($id) {
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-			'uid, pid, tx_nkwsubmenu_knot', 'pages', "uid = '" . $id . "'", '', '', '');
+			'uid, pid, tx_nkwsubmenu_knot', 
+			'pages', 
+			"uid = '" . $id . "'", 
+			'', 
+			'', 
+			'');
 		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 			if ($row1['tx_nkwsubmenu_knot']) {
 				return $row1['uid'];
@@ -153,21 +207,100 @@ class tx_nkwlib extends tslib_pibase {
 			}
 		}
 	}
-	
-	function pageHasChild($id) {
+
+	function getPageTreeIds($startId) {
+		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+			'uid', 
+			'pages', 
+			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($startId) 
+				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
+				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+			'', 
+			'sorting ASC', 
+			'');
+		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
+			// $tree[$row1['uid']]['test'] = 1;
+			$children = $this->getPageTreeIds($row1['uid']);
+			if ($children) {
+				$tree[$row1['uid']]['children'] = $this->getPageTreeIds($row1['uid']);
+			} else {
+				$tree[$row1['uid']]['children'] = 0;
+			}
+		}
+
+		return $tree;
+	}
+
+	function getPageChildIds($id) {
 		$i = 0;
 		$arr = array();
-		
-/*
-		if ($lang > 0)
-			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-				"*","pages","pid = '".$id."' AND deleted = '0' AND hidden = '0' AND sys_language_uid = '".$lang."'","","sorting ASC",""));
-		else
-			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-				"*","pages","pid = '".$id."' AND deleted = '0' AND hidden = '0' AND sys_language_uid = '0'","","sorting ASC","");
-*/
+
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-				'*', 'pages', "pid = '" . $id . "' AND deleted = '0' AND hidden = '0'", '', 'sorting ASC', '');
+			'uid', 
+			'pages', 
+			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
+				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
+				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+			'', 
+			'sorting ASC', 
+			'');
+
+		// $res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+		// 		'*', 
+		// 		'pages', 
+		// 		'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) . " AND deleted = '0' AND hidden = '0'", 
+		// 		'', 
+		// 		'sorting ASC', 
+		// 		'');
+		$arr = array();
+		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
+			$arr[$i]['uid'] = $row1['uid'];
+			// $arr[$row1['uid']]['uid'] = $row1['uid'];
+			// $arr[$row1['uid']];
+			// array_push($arr, $row1['uid']);
+			$i++;
+		}
+		if ($i > 0) {
+			return $arr;
+		} else {
+			return FALSE;
+		}
+	}
+
+	function pageHasChild($id, $lang = 0) {
+		$i = 0;
+		$arr = array();
+
+		if ($lang > 0) {
+			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'*', 
+				'pages', 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
+					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0)
+					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0)
+					. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+				'', 
+				'sorting ASC', 
+				'');
+		} else {
+			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+				'*', 
+				'pages', 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
+					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
+					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+				'', 
+				'sorting ASC', 
+				'');
+		}
+
+		// $res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+		// 		'*', 
+		// 		'pages', 
+		// 		'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) . " AND deleted = '0' AND hidden = '0'", 
+		// 		'', 
+		// 		'sorting ASC', 
+		// 		'');
 		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 			$arr[$i]['uid'] = $row1['uid'];
 			$arr[$i]['title'] = $row1['title'];
@@ -298,11 +431,10 @@ function isChild()
 
 	# debug output
 	function dPrint($str) {
-		echo '<pre>';
+		echo '<pre style="font-size: 11px; line-height: 0.8em; background-color: grey; color: white;">';
 		print_r($str);
 		echo '</pre>';
 	}
-
 
 }
 
