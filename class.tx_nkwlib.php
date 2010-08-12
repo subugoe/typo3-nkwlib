@@ -360,18 +360,6 @@ class tx_nkwlib extends tslib_pibase {
 			return FALSE;
 		}
 	}
-	/*
-function isChild()
-	{
-		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-			"uid,pid","pages","uid = '".$pid."'","","","");
-		while($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1))
-		{
-			if ($row1["pid"] != 3)
-				return $row1["pid"];
-		}	
-	}
-*/
 	function formatString($str) {
 		$str = ereg_replace('&', '&amp;', $str);
 		return $str;
