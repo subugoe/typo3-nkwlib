@@ -61,6 +61,13 @@ class tx_nkwlib extends tslib_pibase {
 		$pageUID = $GLOBALS['TSFE']->id;
 		return $pageUID;
 	}
+	function getLanguageStr($lang) {
+		if ($lang == 0) {
+			return '_de';
+		} else if ($lang == 1) {
+			return '_en';
+		}
+	}
 	function keywordsForPage($id, $lang, $mode = FALSE) {
 		if ($lang == 0) {
 			$sep = '_de';
