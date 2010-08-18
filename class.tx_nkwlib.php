@@ -63,9 +63,9 @@ class tx_nkwlib extends tslib_pibase {
 	}
 	function getLanguageStr($lang) {
 		if ($lang == 0) {
-			return '_de';
+			return 'de';
 		} else if ($lang == 1) {
-			return '_en';
+			return 'en';
 		}
 	}
 	function keywordsForPage($id, $lang, $mode = FALSE) {
