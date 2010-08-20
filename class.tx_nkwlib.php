@@ -319,6 +319,12 @@ class tx_nkwlib extends tslib_pibase {
 		}
 		return $id;
 	}
+	function queryStartEndTime($table) {
+		$str = '((starttime < ' . time() . ' AND endtime > ' . time() . ')'
+			. ' OR (starttime = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
+			. ' AND endtime = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') . '))';
+		return $str;
+	}
 	function pageContent($id, $lang = FALSE) {
 		$i = 0;
 		$arr = array();
@@ -342,7 +348,8 @@ class tx_nkwlib extends tslib_pibase {
 				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
 				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
 				. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
-				. ' AND t3ver_wsid != ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(-1, 'tt_content'), 
+				. ' AND t3ver_wsid != ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(-1, 'tt_content') 
+				. ' AND ' . $this->queryStartEndTime('tt_content'), 
 			'', 
 			'sorting ASC', 
 			'');
