@@ -120,7 +120,7 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'title', 
 				'pages_language_overlay', 
-				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages_language_overlay'), 
 				'', 
 				'', 
 				'');
@@ -132,7 +132,7 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'*', 
 				'pages', 
-				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages'), 
 				'', 
 				'', 
 				'');
@@ -147,7 +147,7 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'*', 
 				'pages_language_overlay', 
-				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages_language_overlay'), 
 				'', 
 				'', 
 				'');
@@ -155,7 +155,7 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'*', 
 				'pages', 
-				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages'), 
 				'', 
 				'', 
 				'');
@@ -172,7 +172,7 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 					'tx_nkwkeywords_keywords', 
 					'pages', 
-					'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($pageInfo['pid']), 
+					'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($pageInfo['pid'], 'pages'), 
 					'', 
 					'', 
 					'');
@@ -186,7 +186,7 @@ class tx_nkwlib extends tslib_pibase {
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid, pid, tx_nkwsubmenu_knot', 
 			'pages', 
-			'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+			'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages'), 
 			'', 
 			'', 
 			'');
@@ -202,9 +202,9 @@ class tx_nkwlib extends tslib_pibase {
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid', 
 			'pages', 
-			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($startId) 
-				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($startId, 'pages') 
+				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages') 
+				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages'), 
 			'', 
 			'sorting ASC', 
 			'');
@@ -225,9 +225,9 @@ class tx_nkwlib extends tslib_pibase {
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid', 
 			'pages', 
-			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
-				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages') 
+				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages') 
+				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages'), 
 			'', 
 			'sorting ASC', 
 			'');
@@ -259,10 +259,10 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'*', 
 				'pages_language_overlay', 
-				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
-					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-					. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($lang), 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages_language_overlay') 
+					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages_language_overlay') 
+					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages_language_overlay') 
+					. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($lang, 'pages_language_overlay'), 
 				'', 
 				'', 
 				'');
@@ -270,9 +270,9 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'*', 
 				'pages', 
-				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
-					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0), 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages') 
+					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages') 
+					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'pages'), 
 				'', 
 				'sorting ASC', 
 				'');
@@ -305,7 +305,7 @@ class tx_nkwlib extends tslib_pibase {
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'uid, content_from_pid', 
 				'pages', 
-				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id), 
+				'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages'), 
 				'', 
 				'', 
 				'');
@@ -326,11 +326,11 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 				'uid, header', 
 				'tt_content', 
-				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
-					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-					. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($lang) 
-					. ' AND t3ver_wsid != ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(-1), 
+				'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'tt_content') 
+					. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
+					. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
+					. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($lang, 'tt_content') 
+					. ' AND t3ver_wsid != ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(-1, 'tt_content'), 
 				'', 
 				'sorting ASC', 
 				'');
@@ -338,11 +338,11 @@ class tx_nkwlib extends tslib_pibase {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 			'uid, header', 
 			'tt_content', 
-			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id) 
-				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-				. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0) 
-				. ' AND t3ver_wsid != ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(-1), 
+			'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'tt_content') 
+				. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
+				. ' AND hidden = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
+				. ' AND sys_language_uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content') 
+				. ' AND t3ver_wsid != ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(-1, 'tt_content'), 
 			'', 
 			'sorting ASC', 
 			'');
