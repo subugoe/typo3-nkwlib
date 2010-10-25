@@ -120,7 +120,8 @@ class tx_nkwlib extends tslib_pibase {
 	 * @param <type> $mode
 	 * @return string 
 	 */
-	function keywordsForPage($id, $lang, $mode = false) {
+	function keywordsForPage($id, $lang, $mode = false, $landingpage = FALSE) {
+	
 		if ($lang == 0) {
 			$sep = '_de';
 		} else if ($lang == 1) {
@@ -159,7 +160,8 @@ class tx_nkwlib extends tslib_pibase {
 						$GLOBALS['TSFE']->ATagParams = 'title="' . $row1['title' . $sep] . '"';
 						$str .= $this->pi_LinkToPage(
 										$row1['title' . $sep],
-										$GLOBALS['TSFE']->tmpl->flatSetup['keywordslandingpage'],
+										$landingpage,
+										// $GLOBALS['TSFE']->tmpl->flatSetup['keywordslandingpage'],
 										'',
 										array('tx_nkwkeywords[id]' => $value));
 						$GLOBALS['TSFE']->ATagParams = $saveATagParams;
