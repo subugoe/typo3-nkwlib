@@ -46,8 +46,7 @@ class tx_nkwlib extends tslib_pibase {
 	 * @todo TESTEN
 	 */
 	function geocodeAddress($str) {
-		$str = preg_replace('/\s/', '+', $str);
-		$getThis = 'http://maps.google.com/maps/api/geocode/json?address=' . $str . '&sensor=false';
+		$getThis = 'http://maps.google.com/maps/api/geocode/json?address=' . urlencode($str) . '&sensor=false';
 		$json = file_get_contents($getThis);
 		$tmp = json_decode($json, true);
 		$return = $tmp;

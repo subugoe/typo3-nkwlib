@@ -8,3 +8,6 @@
 	* Docu + Bugfix
 2010-10-25 - 0.0.27 - Nils K. Windisch <windisch@sub.uni-goettingen.de>
 	* Bugfix WWW-319
+2010-11-09 - 0.0.28 - Nils K. Windisch <windisch@sub.uni-goettingen.de>
+	* Fix: WWW-382 Deutsches SZ (ß) in Google Maps Adressen
+	
