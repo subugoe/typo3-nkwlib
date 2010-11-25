@@ -366,6 +366,7 @@ class tx_nkwlib extends tslib_pibase {
 		while ($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 			$arr[$i]['uid'] = $row1['uid'];
 			$arr[$i]['title'] = $row1['title'];
+			$arr[$i]['tx_nkwsubmenu_in_menu'] = $row1['tx_nkwsubmenu_in_menu'];
 			$i++;
 		}
 		if ($i > 0) {
