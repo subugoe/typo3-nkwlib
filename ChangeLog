@@ -10,4 +10,7 @@
 	* Bugfix WWW-319
 2010-11-09 - 0.0.28 - Nils K. Windisch <windisch@sub.uni-goettingen.de>
 	* Fix: WWW-382 Deutsches SZ (ß) in Google Maps Adressen
+2010-11-25 - 0.0.29 - Nils K. Windisch <windisch@sub.uni-goettingen.de>
+    * Fix: WWW-448 Anzeige von Seitenelementen nur aus der Hauptspalte in Infobox (Inhalte dieser Seite)
+	
 	

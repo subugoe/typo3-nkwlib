@@ -442,7 +442,7 @@ class tx_nkwlib extends tslib_pibase {
 		$arr = array();
 		if ($lang > 0) {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-							'uid, header',
+							'uid, header, colPos',
 							'tt_content',
 							'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'tt_content')
 							. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content')
@@ -454,7 +454,7 @@ class tx_nkwlib extends tslib_pibase {
 							'');
 		} else {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-							'uid, header',
+							'uid, header, colPos',
 							'tt_content',
 							'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'tt_content')
 							. ' AND deleted = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr(0, 'tt_content')
@@ -469,6 +469,7 @@ class tx_nkwlib extends tslib_pibase {
 		while ($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 			$arr[$i]['uid'] = $row1['uid'];
 			$arr[$i]['header'] = $row1['header'];
+			$arr[$i]['colPos'] = $row1['colPos'];
 			$i++;
 		}
 		if ($i > 0) {
