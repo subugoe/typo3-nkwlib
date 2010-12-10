@@ -155,15 +155,16 @@ class tx_nkwlib extends tslib_pibase {
 									'');
 					while ($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
 						$str .= '<li>';
-						$saveATagParams = $GLOBALS['TSFE']->ATagParams;
-						$GLOBALS['TSFE']->ATagParams = 'title="' . $row1['title' . $sep] . '"';
-						$str .= $this->pi_LinkToPage(
-										$row1['title' . $sep],
-										$landingpage,
-										// $GLOBALS['TSFE']->tmpl->flatSetup['keywordslandingpage'],
-										'',
-										array('tx_nkwkeywords[id]' => $value));
-						$GLOBALS['TSFE']->ATagParams = $saveATagParams;
+
+						$this->cObj->typoLink(
+							$row1['title' . $sep], 
+							array(
+								'parameter' => $landingpage,
+								'useCacheHash' => true,
+								'additionalParams' => '&tx_nkwkeywords[id]=' . $value
+								)
+							);
+						$str .= '<a title="' . $row1['title' . $sep] . '" href="' . $this->cObj->lastTypoLinkUrl . '">' . $row1['title' . $sep] . '</a>';
 						$str .= '</li>';
 					}
 				}
