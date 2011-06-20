@@ -370,7 +370,6 @@ class tx_nkwlib {
 	public static function pageHasChild($id, $lang = 0) {
 		$i = 0;
 		$arr = array();
-		$return = array();
 		if ($lang > 0) {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'*',
@@ -399,7 +398,7 @@ class tx_nkwlib {
 		} else {
 			$return = FALSE;
 		}
-		return $return;
+	return $return;
 	}
 
 	/**

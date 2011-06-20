@@ -1,3 +1,6 @@
+2011-06-20 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
+	* Typo gefixt
+
 2011-06-11 - 0.1.0 - Ingo Pfennigstorf
 	* BREAKING: Refactored methods and made them statically available. No more need to extend nkwlib
 
