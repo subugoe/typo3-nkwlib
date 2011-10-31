@@ -27,7 +27,6 @@
  * 
  * @author Nils K. Windisch <windisch@sub.uni-goettingen.de>
  * @author Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
- *
  */
 class tx_nkwlib {
 
@@ -480,7 +479,7 @@ class tx_nkwlib {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'uid, header, colPos',
 							'tt_content',
-							'pid = ' . $id . ' AND deleted = 0 AND hidden = 0 AND sys_language_uid = ' . $lang . ' AND t3ver_wsid != "-1")',
+							'pid = ' . $id . ' AND deleted = 0 AND hidden = 0 AND sys_language_uid = ' . $lang . ' AND t3ver_wsid != "-1"',
 							'',
 							'sorting ASC',
 							'');
@@ -501,7 +500,7 @@ class tx_nkwlib {
 			$arr[$i]['colPos'] = $row1['colPos'];
 			$i++;
 		}
-		if ($i > 0) {
+		if (count($arr) > 0) {
 			$return = $arr;
 		} else {
 			$return = FALSE;
