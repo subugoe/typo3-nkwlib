@@ -371,13 +371,12 @@ class tx_nkwlib {
 		$arr = array();
 		$res = $GLOBALS['TYPO3_DB']->SELECTquery(
 							'*',
-							'pages LEFT JOIN pages_language_overlay ON pages.uid=pages_language_overlay.pid',
+							'pages LEFT JOIN pages_language_overlay ON pages.uid = pages_language_overlay.pid',
 							'pages.pid = ' . $id . ' AND pages.deleted = 0 AND pages.hidden = 0 AND sys_language_uid = ' . $lang,
 							'',
 							'pages.sorting ASC',
 							'');
 		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
-			t3lib_div::devLog ('ab', 'nkwlib', 0, $row);
 
 			if ($lang > 0) {
 				$arr[$i]['uid'] = $row['pid'];
