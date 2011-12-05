@@ -369,7 +369,7 @@ class tx_nkwlib {
 	public static function pageHasChild($id, $lang = 0) {
 		$i = 0;
 		$arr = array();
-		$res = $GLOBALS['TYPO3_DB']->SELECTquery(
+		$res = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'*',
 							'pages LEFT JOIN pages_language_overlay ON pages.uid = pages_language_overlay.pid',
 							'pages.pid = ' . $id . ' AND pages.deleted = 0 AND pages.hidden = 0 AND sys_language_uid = ' . $lang,
