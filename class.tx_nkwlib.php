@@ -369,27 +369,23 @@ class tx_nkwlib {
 	public static function pageHasChild($id, $lang = 0) {
 		$i = 0;
 		$arr = array();
-		if ($lang > 0) {
-			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
+		$res = $GLOBALS['TYPO3_DB']->SELECTquery(
 							'*',
-							'pages_language_overlay',
-							'pid = ' . $id . ' AND deleted = 0 AND hidden = 0 AND sys_language_uid = ' . $lang,
+							'pages LEFT JOIN pages_language_overlay ON pages.uid=pages_language_overlay.pid',
+							'pages.pid = ' . $id . ' AND pages.deleted = 0 AND pages.hidden = 0 AND sys_language_uid = ' . $lang,
 							'',
-							'',
+							'pages.sorting ASC',
 							'');
-		} else {
-			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
-							'*',
-							'pages',
-							'pid = ' . $id . ' AND deleted = 0 AND hidden = 0',
-							'',
-							'sorting ASC',
-							'');
-		}
-		while ($row1 = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res1)) {
-			$arr[$i]['uid'] = $row1['uid'];
-			$arr[$i]['title'] = $row1['title'];
-			$arr[$i]['tx_nkwsubmenu_in_menu'] = $row1['tx_nkwsubmenu_in_menu'];
+		while ($row = $GLOBALS['TYPO3_DB']->sql_fetch_assoc($res)) {
+			t3lib_div::devLog ('ab', 'nkwlib', 0, $row);
+
+			if ($lang > 0) {
+				$arr[$i]['uid'] = $row['pid'];
+			} else {
+				$arr[$i]['uid'] = $row['pages.uid'];
+			}
+				$arr[$i]['title'] = $row['title'];
+			$arr[$i]['tx_nkwsubmenu_in_menu'] = $row['tx_nkwsubmenu_in_menu'];
 			$i++;
 		}
 		if ($i > 0) {
