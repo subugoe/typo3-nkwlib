@@ -1,3 +1,6 @@
+2011-12-06 Nils Windisch <windisch@sub.uni-goettingen.de>
+	* Fix SQL Query WWW-983
+
 2011-12-05 Ingo Pfennigstorf <pfennigstorf@sub.uni-goettingen.de>
 	* Fix der Unterseitendarstellung
 
