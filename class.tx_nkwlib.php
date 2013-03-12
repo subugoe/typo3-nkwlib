@@ -203,7 +203,7 @@ class tx_nkwlib {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'title',
 							'pages_language_overlay',
-							'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages_language_overlay'),
+							'pid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages_language_overlay') . ' AND t3ver_wsid = 0',
 							'',
 							'',
 							'');
@@ -215,7 +215,7 @@ class tx_nkwlib {
 			$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 							'*',
 							'pages',
-							'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages'),
+							'uid = ' . $GLOBALS['TYPO3_DB']->fullQuoteStr($id, 'pages') . ' AND pid > 0 AND t3ver_wsid = 0',
 							'',
 							'',
 							'');
@@ -310,7 +310,7 @@ class tx_nkwlib {
 		$res1 = $GLOBALS['TYPO3_DB']->exec_SELECTquery(
 						'uid',
 						'pages',
-						'pid = ' . $startId . ' AND deleted = 0 AND hidden = 0',
+						'pid = ' . $startId . ' AND deleted = 0 AND hidden = 0 AND pid > 0 AND t3ver_wsid = 0',
 						'',
 						'sorting ASC',
 						'');
